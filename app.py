@@ -47,5 +47,6 @@ if __name__ == '__main__':
     svo1 = Servo(1)
     svo2 = Servo(2)
     svo3 = Servo(3)
+    svo_all = Servo(254)
     initial_setup()
     main()
