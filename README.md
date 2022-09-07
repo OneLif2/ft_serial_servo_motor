@@ -8,7 +8,7 @@ This is a python library using the commands of the "Hansrobot protocol interface
 2. More flexibility, such as the user can change the speed at any point
 
 ## Usage : Take the app.py as an example
-1. Connect the set the servo ID of each motor e.g. 1, 2, 3...
+1. Set the servo ID for each motor e.g. 1, 2, 3...
 2. Run the app.py
 
 ## Youtube:
