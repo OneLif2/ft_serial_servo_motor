@@ -7,7 +7,7 @@ class Serial:
         baudrate_STS = 1000000
         self.read_goal_pos = 0
         self.read_curr_pos = 0
-        self.read_move_state = 0
+        self.read_move_status = 0
         try:
             port = "/dev/ttyUSB0"
             self.ser = serial.Serial(
@@ -20,11 +20,11 @@ class Serial:
         self.ID = ID
         self.GOAL_POS = 0x2A  # 2 bytes
         self.CURR_POS = 0x38  # 2 bytes
-        self.MOVE_STATE = 0x42  # 1 bytes
+        self.MOVE_status = 0x42  # 1 bytes
 
         self.GOAL_POS = self.GOAL_POS - 0x25
         self.CURR_POS = self.CURR_POS - 0x25
-        self.MOVE_STATE = self.MOVE_STATE - 0x25
+        self.MOVE_status = self.MOVE_status - 0x25
         self.ser.read_all().hex()
 
     def str2arr(self, newdata_hex, split_strings):
@@ -57,8 +57,8 @@ class Serial:
                 split_strings[self.GOAL_POS+1] & 0xff) << 8
             self.read_curr_pos = split_strings[self.CURR_POS] & 0xff | (
                 split_strings[self.CURR_POS+1] & 0xff) << 8
-            self.read_move_state = (split_strings[self.MOVE_STATE]) & 0xff
-        return self.read_goal_pos, self.read_curr_pos, self.read_move_state
+            self.read_move_status = (split_strings[self.MOVE_status]) & 0xff
+        return self.read_goal_pos, self.read_curr_pos, self.read_move_status
     
     def get_data(self):
         newdata_hex = ""
