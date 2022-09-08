@@ -1,6 +1,16 @@
+# Example for publish same command to all motor
+import os
+import sys
+# Append parent directory to import path, import file from parent directory
+sys.path.insert(1, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+print(__file__) #./file.py
+print(os.path.abspath(__file__)) #./file.py
+print(os.path.dirname(os.path.abspath(__file__))) #./
+print(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) #../
+
 from serial_servo import *
 import time
-
 
 def timer(delay):
     start_time = time.time()
@@ -42,21 +52,39 @@ def main():
     svo_speed = 0
     while (True):
 
-        move3svo(0, svo_speed)
+        svo_all.servo_pos_spd(0, svo_speed)
+        while svo1.isMoving() and svo2.isMoving() and svo3.isMoving():
+            continue
         svo_speed += 250
         read_all_motor_info()
-        move3svo(90, svo_speed)
+
+        svo_all.servo_pos_spd(90, svo_speed)
+        while svo1.isMoving() and svo2.isMoving() and svo3.isMoving():
+            continue
         svo_speed += 250
         read_all_motor_info()
-        move3svo(180, svo_speed)
+
+        svo_all.servo_pos_spd(180, svo_speed)
+        while svo1.isMoving() and svo2.isMoving() and svo3.isMoving():
+            continue
         svo_speed += 250
         read_all_motor_info()
-        move3svo(270, svo_speed)
+
+        svo_all.servo_pos_spd(270, svo_speed)
+        while svo1.isMoving() and svo2.isMoving() and svo3.isMoving():
+            continue
         svo_speed += 250
         read_all_motor_info()
-        move3svo(360, svo_speed)
+
+        svo_all.servo_pos_spd(360, svo_speed)
+        while svo1.isMoving() and svo2.isMoving() and svo3.isMoving():
+            continue
         svo_speed += 250
         read_all_motor_info()
+
+        if svo_speed > 3500:
+            svo_speed = 0
+        svo_speed += 250
         if svo_speed > 3500:
             svo_speed = 0
 
