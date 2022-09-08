@@ -1,5 +1,5 @@
-# FEETECH STS3032 Serial Servo
-#FEETECH #STS3032 Serial Servo
+# FEETECH STS series Serial Servo
+#FEETECH #STS series #STS3032 #Serial Servo #Steper motor #Serial stepper motor
 
 FT serial servo library using the commands of the "Hansrobot protocol interface" to provide hooks for HansRobot Elfin robot arm on Windows, Mac or Linux.
 
