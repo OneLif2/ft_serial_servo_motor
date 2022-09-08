@@ -20,10 +20,13 @@ I'm currently developing a python library for servo mode and infinite servo mode
 4. Less time.delay command is used, smoother action
 5. More flexibility, such as the user can change the speed at any point
 
+## STS serial motor default setting:
+Servo ID = 1
+Baudrate = 1000000
 
 ## Usage : Take the app.py as an example
 1. Set the servo ID for each motor with the "_write_servo_chg_setting.ipynb"
-    e.g. ID = 1, 2, 3...
+    e.g. ID = 2, 3...
 2. Run the app.py
 
 ## Youtube:
