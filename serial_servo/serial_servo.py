@@ -8,6 +8,7 @@ class Servo():
         self.ID = ID
         self.pos = None
         self.speed = 0
+        self.pos_ctr = 0
 
         self.read_goal_pos = 0
         self.read_curr_pos = 0
@@ -81,9 +82,6 @@ class Servo():
     
     def servo_pos(self, pos):
         self.pos = self.sint2u16(round(self.clamp(pos,-360*8,360*8)/360*4095))
-        print(pos)
-        print(int(pos/360*4095))
-        print(hex(self.pos))
         int_arr = [0xFF, 0xFF, self.ID, 5, self.WRITE_CMD, self.GOAL_POS, self.pos % 256, self.pos >> 8, 0x00]
         self.srw.send(int_arr)
 
@@ -150,54 +148,3 @@ class Servo():
             self.read_move_status = split_strings[self.MOVE_STATUS]
         print("ID",self.ID,"WM:",'Stepper' if read_work_mode == 3 else 'Servo', ",goal pos =",self.read_goal_pos, ",curr pos =",self.read_curr_pos, ",pos counter =",self.read_pos_ctr, ",IsMoving =",self.read_move_status)
         return read_work_mode, self.read_max_pos_mlt, self.read_goal_pos, self.read_curr_pos, self.read_pos_ctr, self.read_move_status
-
-
-"""
-    def moveJoint(self, jPos):
-        msg = 'MoveJ,0,' \
-            + str(jPos.j1) + ',' + str(jPos.j2) + ',' \
-            + str(jPos.j3) + ',' + str(jPos.j4) + ',' \
-            + str(jPos.j5) + ',' + str(jPos.j6) + ',;'
-        reply = self.srw.send(msg)
-        self._validate(reply)
-    
-    def setSpeed(self, speed: int):
-        msg = 'SetOverride,0,' \
-            + str(speed) + ',;'
-        reply = self.srw.send(msg)
-        self._validate(reply)
-
-    def getSpeed(self) -> int:
-        msg = 'ReadOverride,0,;'
-        reply = self.srw.send(msg)
-        self._validate(reply)
-        values = reply.split(',')
-        if len(values) < 4:
-            raise RAError('Received invalid response.')
-        return values[2]
-        
-    def moveGripper(self, position, speed=250, force=10):
-        self.clamp(position,0,140)
-        self.clamp(speed,30,250)
-        self.clamp(force,10,125)
-        msg = 'SetRobotiq,' + str(position) + ',' + str(speed) + ',' + str(force) + ',;'
-        reply = self.srw.send(msg)
-        self._validate(reply)
-    
-    def resetGripper(self):
-        msg = 'RobotIQReset,;'
-        reply = self.srw.send(msg)
-        self._validate(reply) #check if error raised
-        print(reply)
-
-    def isGripperMoving(self):
-        reply = self.srw.send('RobotiqStatus,;')
-        self._validate(reply)
-        if reply == 'RobotiqStatus,OK,0,3,1,1,;':
-            return True #return True while its moving
-        if reply == 'RobotiqStatus,OK,2,3,1,1,;':
-            return False #return True while it is grasping an object    
-        if reply == 'RobotiqStatus,OK,3,3,1,1,;':
-            return False #return False when the action is done
-        raise RAError()
-"""
