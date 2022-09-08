@@ -45,7 +45,7 @@ The read_all_info function requires all 87 bytes data from the servo and literal
 ![](reference/_output_example/read_all_info.png)
 
 ## read_pos_ctr_offset
-Use read_pos_ctr_offset to set read_pos_ctr (position counter) to zero before the motor starts. The position counter will not display correctly when the value is greater than about 31000 (0xffff / 2 - offset), but will return to normal when the value is less than 31000.
+Use read_pos_ctr_offset to set read_pos_ctr (position counter) to zero before the motor starts. The position counter will not display correctly when the value is greater/smaller than about ±31000 (0xffff / 2 - offset), but will return to normal when the value is between -31xxx to 31xxx.
 ```python
 def change_mod(self, mode):
     if mode == 0:
