@@ -65,10 +65,12 @@ def main():
     read_all_motor_info()
     print("===================================")
     time.sleep(2)
+
     move3svo(-360*8, svo_speed)
     read_all_motor_info()
     print("===================================")
     time.sleep(2)
+
     move3svo(-360*8, svo_speed)
     read_all_motor_info()
     print("===================================")
@@ -78,7 +80,7 @@ if __name__ == '__main__':
     svo1 = Servo(1)
     svo2 = Servo(2)
     svo3 = Servo(3)
-    svo_all = Servo(254)
+    svo_all = Servo(254,3)
     change_mode_3()
     # svo1.setSpeed(300)
     main()
