@@ -13,16 +13,6 @@ print(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # ../
 import time
 from serial_servo import *
 
-def timer(delay):
-    start_time = time.time()
-    time_diff = 0
-    while time_diff < delay:
-        a, b, c = svo1.ser.read_mv_status()
-        print("read_goal_pos = ", a, "read_pres_pos = ",
-              b, "read_move_status = ", c)
-        time_diff = time.time() - start_time
-
-
 def move3svo(pos, svo_speed):
     svo1.servo_pos_spd(pos, svo_speed)
     svo2.servo_pos_spd(pos, svo_speed)
@@ -56,17 +46,12 @@ def read_all_motor_info():
 def main():
     svo_speed = 0
 
-    move3svo(360*8, svo_speed)
+    move3svo(360*4, svo_speed)
     read_all_motor_info()
     print("===================================")
     time.sleep(2)
 
-    move3svo(360*8, svo_speed)
-    read_all_motor_info()
-    print("===================================")
-    time.sleep(2)
-
-    move3svo(-360*8, svo_speed)
+    move3svo(360*4, svo_speed)
     read_all_motor_info()
     print("===================================")
     time.sleep(2)

@@ -2,16 +2,6 @@ from serial_servo import *
 import time
 
 
-def timer(delay):
-    start_time = time.time()
-    time_diff = 0
-    while time_diff < delay: # keep read data within "delay" second
-        a, b, c = svo1.ser.read_mv_status()
-        print("read_goal_pos = ", a, "read_pres_pos = ",
-              b, "read_move_status = ", c)
-        time_diff = time.time() - start_time
-
-
 def move3svo(pos, svo_speed):
     svo1.servo_pos_spd(pos, svo_speed)
     svo2.servo_pos_spd(pos, svo_speed)
