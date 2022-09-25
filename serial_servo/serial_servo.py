@@ -16,7 +16,6 @@ class Servo():
         self.read_pres_pos = 0
         self.read_pos_ctr = 0
         self.virtual_pos_ctr = 0
-        self.virtual_pos_ctr_ttl = 0
         self.read_pos_ctr_offset = 0
         self.read_move_status = 0
         self.read_work_mode = None
@@ -92,7 +91,7 @@ class Servo():
         if speed >= 0: self.speed = speed
         pos = round(self.clamp(pos, -360*8, 360*8)/360*4095)
         self.pos = self.sint2pos(pos)
-        self.virtual_pos_ctr_ttl = pos + self.virtual_pos_ctr_ttl
+        self.virtual_pos_ctr = pos + self.virtual_pos_ctr
         int_arr = [0xFF, 0xFF, self.ID, 9, self.WRITE_CMD, self.GOAL_POS, self.pos % 256, (self.pos >> 8) % 256, 0, 0,
                    int(self.speed) % 256, int(self.speed) >> 8, 0x00]
         self.srw.send(int_arr)
@@ -100,7 +99,7 @@ class Servo():
     def servo_pos(self, pos):
         pos = round(self.clamp(pos, -360*8, 360*8)/360*4095)
         self.pos = self.sint2pos(pos)
-        self.virtual_pos_ctr_ttl = pos + self.virtual_pos_ctr_ttl
+        self.virtual_pos_ctr = pos + self.virtual_pos_ctr
         int_arr = [0xFF, 0xFF, self.ID, 5, self.WRITE_CMD,
                    self.GOAL_POS, self.pos % 256, self.pos >> 8, 0x00]
         self.srw.send(int_arr)
@@ -144,12 +143,11 @@ class Servo():
                   pp, "  | read_pos_counter = ", pc, "| read_move_status = ", m)
         else:
             print("ID : ", self.ID, " | read_goal_pos = ", gp, " | read_pres_pos = ", pp,
-                  "  | read_pos_counter = ", self.virtual_pos_ctr_ttl - pp, "| read_move_status = ", m)
+                  "  | read_pos_counter = ", self.virtual_pos_ctr - pp, "| read_move_status = ", m)
 
         if m == 1:
             return True  # return 1 while it is moving
         if m == 0:
-            self.virtual_pos_ctr = -pp
             return False  # return 0 while stopped
         raise RAError()
 
@@ -213,7 +211,7 @@ class Servo():
                   ",IsMoving =", self.read_move_status)
         else:
             print("ID", self.ID, "WM:", 'Stepper' if self.read_work_mode == 3 else 'Servo', ",goal pos =", self.read_goal_pos,
-                  ",pres pos =", self.read_pres_pos, ",pos counter =", self.virtual_pos_ctr_ttl - self.read_pres_pos, ",speed =", self.read_curr_speed,
+                  ",pres pos =", self.read_pres_pos, ",pos counter =", self.virtual_pos_ctr - self.read_pres_pos, ",speed =", self.read_curr_speed,
                   ",IsMoving =", self.read_move_status)
 
         return self.read_work_mode, self.read_max_pos_lmt, self.read_goal_pos, self.read_pres_pos, self.read_pos_ctr, self.read_move_status
