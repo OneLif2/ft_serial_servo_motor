@@ -17,8 +17,9 @@ I'm currently developing a python library for servo mode and infinite servo mode
 1. DC motor mode
 2. Serial servo mode
 3. Stepper serial servo mode (Infinite serial servo mode)
-4. Less time.delay command is used, smoother action
-5. More flexibility, such as the user can change the speed at any point
+4. Support the angle in integer or floating point format
+5. Less time.delay command is used, smoother action
+6. More flexibility, such as the user can change the speed at any point
 
 ## STS serial motor default setting:
 - Servo ID = 1
