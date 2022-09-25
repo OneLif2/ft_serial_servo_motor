@@ -37,11 +37,12 @@ class Serial_rw:
     def send(self, int_arr):
         newdata_hex = ""
         int_arr = self.update_check_digit(int_arr)
-        while not newdata_hex.startswith("ffff") and len(newdata_hex) < 12:
+        while not newdata_hex.startswith("ffff") and not newdata_hex[8:10] == "00":
             self.ser.write(serial.to_bytes(int_arr))
             time.sleep(0.06)
             newdata_hex = self.ser.read_all().hex()
             #print("newdata_hex_send",newdata_hex, len(newdata_hex))
             if self.ID == 254:
                 break
+        #print("To ID",self.ID,"SEND OK")
         return newdata_hex

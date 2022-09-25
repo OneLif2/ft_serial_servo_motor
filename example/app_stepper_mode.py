@@ -1,17 +1,17 @@
 # Example for stepper servo mode
 import os
 import sys
+
 # Append parent directory to import path, import file from parent directory
 sys.path.insert(1, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-print(__file__) #./file.py
-print(os.path.abspath(__file__)) #./file.py
-print(os.path.dirname(os.path.abspath(__file__))) #./
-print(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) #../
+print(__file__)  # ./file.py
+print(os.path.abspath(__file__))  # ./file.py
+print(os.path.dirname(os.path.abspath(__file__)))  # ./
+print(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # ../
 
-from serial_servo import *
 import time
-
+from serial_servo import *
 
 def timer(delay):
     start_time = time.time()
@@ -56,17 +56,22 @@ def read_all_motor_info():
 def main():
     svo_speed = 0
 
-    move3svo(-360*8, svo_speed)
-    read_all_motor_info()
-    time.sleep(5)
-    move3svo(-360*8, svo_speed)
-    read_all_motor_info()
-    time.sleep(5)
     move3svo(360*8, svo_speed)
     read_all_motor_info()
-    time.sleep(5)
+    print("===================================")
+    time.sleep(2)
+
     move3svo(360*8, svo_speed)
     read_all_motor_info()
+    print("===================================")
+    time.sleep(2)
+    move3svo(-360*8, svo_speed)
+    read_all_motor_info()
+    print("===================================")
+    time.sleep(2)
+    move3svo(-360*8, svo_speed)
+    read_all_motor_info()
+    print("===================================")
 
 
 if __name__ == '__main__':
