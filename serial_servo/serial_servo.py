@@ -57,22 +57,19 @@ class Servo():
         if mode == 0:
             int_arr = [0xFF, 0xFF, self.ID, 4, self.WRITE_CMD, 33, mode, 0x00]
             self.srw.send(int_arr)
-            int_arr = [0xFF, 0xFF, self.ID, 5,
-                       self.WRITE_CMD, 11, 0xff, 0xf, 0x00]
+            int_arr = [0xFF, 0xFF, self.ID, 5,self.WRITE_CMD, 11, 0xff, 0xf, 0x00]
             self.srw.send(int_arr)
             self.read_all_info()
             print("ID ", self.ID, " change mode", mode, "ok")
         if mode == 3:
             int_arr = [0xFF, 0xFF, self.ID, 4, self.WRITE_CMD, 33, mode, 0x00]
             self.srw.send(int_arr)
-            int_arr = [0xFF, 0xFF, self.ID, 5,
-                       self.WRITE_CMD, 11, 0x00, 0x00, 0x00]
+            int_arr = [0xFF, 0xFF, self.ID, 5,self.WRITE_CMD, 11, 0x00, 0x00, 0x00]
             self.srw.send(int_arr)
             int_arr = [0xFF, 0xFF, self.ID, 2, 0x0A, 0x00]
             self.srw.send(int_arr)
             self.read_all_info()
             self.read_pos_ctr_offset = self.read_pos_ctr
-            #self.read_pos_ctr_offset = 0
             print("ID ", self.ID, " change mode", mode, "ok")
 
     def sint2pos(self, signed_int: int):
