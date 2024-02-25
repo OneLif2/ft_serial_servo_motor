@@ -1,7 +1,7 @@
 # FEETECH STS series Serial Servo
 #FEETECH #STS series #STS3032 #Serial Servo #Steper motor #Serial stepper motor
 
-FT serial servo library using the commands of the "Hansrobot protocol interface" to provide hooks for HansRobot Elfin robot arm on Windows, Mac or Linux.
+The FT serial servo library wraps up the HEX command into Python functions that can run on Windows, Mac, or Linux.
 
 Same as stepper motor with 4096(0 - 4095) steps and the driver board integrated inside the motor, so that the program can read the goal position, current position and move status from the motor. 
 
