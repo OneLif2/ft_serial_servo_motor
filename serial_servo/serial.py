@@ -25,7 +25,13 @@ class Serial_rw:
 
     def get_data(self, read_arr):
         newdata_hex = ""
-        while not newdata_hex.startswith("ffff") and len(newdata_hex) < 72:
+        # Continue reading until we receive a frame that starts with the
+        # expected header and contains enough data.  The previous logic used
+        # ``and`` which would stop reading as soon as one of the conditions was
+        # False.  That meant that data not starting with ``ffff`` could end the
+        # loop prematurely when the length requirement was already satisfied.
+        # Using ``or`` ensures we only exit when both conditions are met.
+        while not newdata_hex.startswith("ffff") or len(newdata_hex) < 72:
             self.ser.write(serial.to_bytes(self.update_check_digit(read_arr)))
             time.sleep(0.06)
             newdata_hex = self.ser.read_all().hex()
@@ -37,7 +43,12 @@ class Serial_rw:
     def send(self, int_arr):
         newdata_hex = ""
         int_arr = self.update_check_digit(int_arr)
-        while not newdata_hex.startswith("ffff") and not newdata_hex[8:10] == "00":
+        # Wait until we receive an acknowledgement that starts with the
+        # expected header and reports an "OK" status.  Similar to ``get_data``
+        # the original code used ``and`` which could prematurely exit if one
+        # condition became False before the other.  The loop should continue
+        # while either condition is not satisfied.
+        while not newdata_hex.startswith("ffff") or not newdata_hex[8:10] == "00":
             self.ser.write(serial.to_bytes(int_arr))
             time.sleep(0.06)
             newdata_hex = self.ser.read_all().hex()
